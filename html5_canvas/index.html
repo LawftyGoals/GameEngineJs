@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <title>Example 2.1: HTML5 Canvas Project</title>
+    <link rel="icon" type="image/x-icon" href="./facicon.png">
+    </link>
+    <script type="module" src="./src/core.js"></script>
+</head>
+
+<body>
+    <canvas id="GLCanvas" width="640" height="480">
+        Browser does not suppor HTML5 Canvas
+
+    </canvas>
+    <script type="x-shader/x-vertex" id="VertexShader">
+        //this is vertex shader
+        attribute vec3 aVertexPosition; //expects one vertex position
+            //naming convention attributes always begin with "a"
+        void main(void){
+            //convert the vec3 into vec4 for scan conversion and assing to gl_Position to pass vertex to fragment shader
+            gl_Position = vec4(aVertexPosition, 1.0);
+        
+        }
+        // end of vertex shader
+
+    </script>
+    <script type="x-shader/x-fragment" id="FragmentShader">
+        //this is the frgament (or pixel) shader
+        void main(void){
+            //for every pixel called (within the square) sets
+            // constant color white with alpha-channel value of 1.0
+
+            gl_FragColor = vec4(1.0, 1.0, 1.0, 1.0);
+        }
+        //end of fragment/pixel shader
+    </script>
+</body>
+
+</html>
