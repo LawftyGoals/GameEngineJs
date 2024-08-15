@@ -23,6 +23,8 @@ function init() {
     new Float32Array(vertciesOfSquare),
     gl.STATIC_DRAW
   );
+
+  
 }
 
 export { init, get };
