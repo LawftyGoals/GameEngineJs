@@ -7,13 +7,6 @@
     <link rel="icon" type="image/x-icon" href="./facicon.png">
     </link>
     <script type="module" src="./src/core.js"></script>
-</head>
-
-<body>
-    <canvas id="GLCanvas" width="640" height="480">
-        Browser does not suppor HTML5 Canvas
-
-    </canvas>
     <script type="x-shader/x-vertex" id="VertexShader">
         //this is vertex shader
         attribute vec3 aVertexPosition; //expects one vertex position
@@ -31,11 +24,18 @@
         void main(void){
             //for every pixel called (within the square) sets
             // constant color white with alpha-channel value of 1.0
-
             gl_FragColor = vec4(1.0, 1.0, 1.0, 1.0);
         }
         //end of fragment/pixel shader
     </script>
+</head>
+
+<body>
+    <canvas id="GLCanvas" width="640" height="480">
+        Browser does not suppor HTML5 Canvas
+
+    </canvas>
+
 </body>
 
 </html>
