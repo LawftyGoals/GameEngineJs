@@ -4,6 +4,18 @@
 <head>
     <title>JS_Objects</title>
     <script type="module" src="./src/engine/core.js"></script>
+    <script type="x-shader/x-vertex" id="VertexShader">
+        attribute vec3 aVertexPosition;
+
+        void main(void){
+            gl_Position = vec4(aVertexPosition, 1.0);
+        }
+    </script>
+    <script type="x-shader/x-fragment" id="FragmentShader">
+        void main(void){
+            gl_FragColor = vec4(0.5, 0.0, 0.0, 1.0);
+        }
+    </script>
 </head>
 
 <body>
