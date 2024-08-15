@@ -68,7 +68,7 @@ function activate() {
 
   // Step C: bind vertex buffer to attribute defined in vertex shader
   gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer.get());
-  gl.vertexAttribPointer(this.vertexPositionRef, 3, gl.FLOAT, false, 0, 0);
+  gl.vertexAttribPointer(vertexPositionRef, 3, gl.FLOAT, false, 0, 0);
 
   //3 each element is 3 float (xyz)
   //glfloat data type is float
@@ -76,7 +76,7 @@ function activate() {
   // 0 bytes to skip in between elements
   // 0 offsets to first element
 
-  gl.enableVertexAttribArray(this.vertexPositionRef);
+  gl.enableVertexAttribArray(vertexPositionRef);
 }
 
 export { init, activate };

@@ -1,5 +1,8 @@
 "use strict";
 
+import * as vertexBuffer from "./vertex_buffer.js";
+import * as simpleShader from "./shader_support.js";
+
 /**@type {WebGL2RenderingContext} */
 let gl = null;
 
@@ -10,6 +13,7 @@ function getGL() {
 window.onload = () => {
   initWebGL("GLCanvas");
   clearCanvas();
+  drawSquare();
 };
 
 function initWebGL(htmlCanvasId) {
@@ -19,16 +23,24 @@ function initWebGL(htmlCanvasId) {
 
   if (gl === null) {
     document.body.appendChild(document.createTextNode("No webgl2 =("));
-
     return;
   }
 
   gl.clearColor(0, 0.8, 0, 1);
-  gl.clear(gl.COLOR_BUFFER_BIT);
+  vertexBuffer.init();
+  simpleShader.init("VertexShader", "FragmentShader");
 }
 
 function clearCanvas() {
   gl.clear(gl.COLOR_BUFFER_BIT);
+}
+
+function drawSquare() {
+  //Step A: Activate the sahder
+  simpleShader.activate();
+
+  // Step B draw the above settings
+  gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
 }
 
 export { getGL };
