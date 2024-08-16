@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+
+<head>
+    <title>TS_Objects</title>
+    <script type="module" src="./dist/index.js"></script>
+    <script type="x-shader/x-vertex" id="VertexShader">
+        attribute vec3 aVertexPosition;
+
+        void main(void) {
+            gl_Position = vec4(aVertexPosition, 1);
+        }
+    </script>
+    <script type="x-shader/x-fragment" id="FragmentShader">
+        void main(void){
+            gl_FragColor = vec4(1.0, 1.0, 1.0, 1.0);
+        }
+    </script>
+</head>
