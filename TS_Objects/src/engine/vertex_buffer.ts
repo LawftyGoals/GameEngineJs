@@ -1,5 +1,3 @@
-import { getGL } from "./core.js";
-
 let mGLVertexBuffer: WebGLBuffer | null = null;
 
 export function get() {
@@ -9,8 +7,7 @@ export function get() {
 const verticesOfSquare = [
     0.5, 0.5, 0.0, -0.5, 0.5, 0, 0.5, -0.5, 0, -0.5, -0.5, 0,];
 
-export function init() {
-    const gl = getGL();
+export function init(gl: WebGL2RenderingContext) {
 
     if (gl) {
         mGLVertexBuffer = gl.createBuffer();

@@ -1,9 +1,20 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.getGL = getGL;
+import * as vertexBuffer from "./vertex_buffer.js";
+import { SimpleShader } from "./simple_shader.js";
 let mGL = null;
-function getGL() {
+let mShader = null;
+export function getGL() {
     return mGL;
+}
+export function init(htmlCanvasId) {
+    initWebGL(htmlCanvasId);
+    if (!mGL) {
+        throw new Error("mGL is not being initiated by initWebGL");
+    }
+    vertexBuffer.init(mGL);
+    createShader(mGL);
+}
+function createShader(gl) {
+    mShader = new SimpleShader(gl, "VertexShader", "FragmentShader");
 }
 function initWebGL(htmlCanvasId) {
     const canvas = document.getElementById(htmlCanvasId);
@@ -12,14 +23,23 @@ function initWebGL(htmlCanvasId) {
         document.body.appendChild(document.createTextNode("No webgl2 =("));
         return;
     }
-    mGL.clearColor(0, 0.8, 0, 1);
 }
-function clearCanvas() {
-    if (mGL)
+export function clearCanvas(color) {
+    if (mGL) {
+        mGL.clearColor(color[0], color[1], color[2], color[3]);
         mGL.clear(mGL.COLOR_BUFFER_BIT);
+    }
 }
-function drawSquare() {
-    if (mGL)
+export function drawSquare() {
+    if (mShader && mGL) {
+        mShader.activate();
         mGL.drawArrays(mGL.TRIANGLE_STRIP, 0, 4);
+    }
+    else if (!mShader) {
+        throw new Error("mShader is not being initialized in drawSquare");
+    }
+    else if (!mGL) {
+        throw new Error("mGL is not being initialized in drawSquare");
+    }
 }
 //# sourceMappingURL=core.js.map

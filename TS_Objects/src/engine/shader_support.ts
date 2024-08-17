@@ -2,23 +2,49 @@ import { getGL } from "./core.js";
 import * as vertexBuffer from "./vertex_buffer.js";
 
 let mCompiledShader: WebGLProgram | null = null;
-let vertexPositionRef = null;
+let vertexPositionRef: GLint | null = null;
 
-function init(vertexShaderId: string, fragmentShaderId: string) {
-    const gl = getGL();
+export function init(gl: WebGL2RenderingContext, vertexShaderId: string, fragmentShaderId: string) {
+
+    let vertexShader;
+    let fragmentShader
+
 
     if (gl) {
-        const vertexShader = loadAndCompileShader(vertexShaderId, gl.VERTEX_SHADER);
-        const fragmentShader = loadAndCompileShader(fragmentShaderId, gl.FRAGMENT_SHADER);
-
-        mCompiledShader = gl.createProgram() as WebGLProgram;
-        gl.attachShader(mCompiledShader, vertexShader);
-        gl.attachShader(mCompiledShader, fragmentShader);
-        gl.linkProgram(mCompiledShader);
-
+        vertexShader = loadAndCompileShader(vertexShaderId, gl.VERTEX_SHADER);
+        fragmentShader = loadAndCompileShader(fragmentShaderId, gl.FRAGMENT_SHADER);
     }
     else {
         throw new Error("shader_support failed to load gl context")
+
+    }
+
+    mCompiledShader = gl.createProgram() as WebGLProgram;
+    gl.attachShader(mCompiledShader, vertexShader);
+    gl.attachShader(mCompiledShader, fragmentShader);
+    gl.linkProgram(mCompiledShader);
+
+    if (!gl.getProgramParameter(mCompiledShader, gl.LINK_STATUS)) {
+        throw new Error("Error linking shader");
+    }
+
+
+    vertexPositionRef = gl.getAttribLocation(mCompiledShader, "aVertexPosition");
+
+}
+
+export function activate(gl: WebGL2RenderingContext) {
+
+
+    gl.useProgram(mCompiledShader);
+
+    gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer.get());
+
+    if (vertexPositionRef) {
+        gl.vertexAttribPointer(vertexPositionRef, 3, gl.FLOAT, false, 0, 0);
+        gl.enableVertexAttribArray(vertexPositionRef);
+    } else {
+        throw new Error("vertexPositionRef is not initiated by activate");
     }
 
 }
