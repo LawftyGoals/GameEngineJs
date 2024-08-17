@@ -57,6 +57,9 @@ function loadAndCompileShader(gl, filePath, shaderType) {
         throw new Error(`failed to load shader: ${filePath} [HINT: project needs server to run]\n${error.message}`);
     }
     const shaderSource = xmlReq.responseText;
+    if (shaderSource === null) {
+        throw new Error("WARNING: Loading of:" + filePath + " Failed!");
+    }
     const compiledShader = gl.createShader(shaderType);
     if (!compiledShader) {
         throw new Error(`shader of type ${shaderType} is not being created in loadAndCompileShader`);

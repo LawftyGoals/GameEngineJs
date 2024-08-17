@@ -80,6 +80,11 @@ function loadAndCompileShader(gl: WebGL2RenderingContext, filePath: string, shad
     try { xmlReq.send() } catch (error) { throw new Error(`failed to load shader: ${filePath} [HINT: project needs server to run]\n${(error as Error).message}`) }
 
     const shaderSource = xmlReq.responseText;
+
+    if (shaderSource === null) {
+        throw new Error("WARNING: Loading of:" + filePath + " Failed!");
+    }
+
     const compiledShader = gl.createShader(shaderType);
 
     if (!compiledShader) {
