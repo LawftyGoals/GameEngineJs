@@ -5,7 +5,8 @@ export class SimpleShader {
     mVertexShader: WebGLShader;
     mFragmentShader: WebGLShader;
     mCompiledShader: WebGLProgram | null;
-    mVertexPositionRef: number;
+    mVertexPositionRef: GLint;
+    mPixelColorRef: WebGLUniformLocation | null;
 
 
 
@@ -31,10 +32,15 @@ export class SimpleShader {
         }
 
         this.mVertexPositionRef = this.gl.getAttribLocation(this.mCompiledShader, "aVertexPosition");
+        this.mPixelColorRef = this.gl.getUniformLocation(this.mCompiledShader, "uPixelColor");
+
+        if (!this.mPixelColorRef) {
+            throw new Error("mPixelColorRef is not being initialized correctly")
+        }
 
     }
 
-    activate() {
+    activate(pixelColor: number[]) {
         this.gl.useProgram(this.mCompiledShader);
 
         this.gl.bindBuffer(this.gl.ARRAY_BUFFER, vertexBuffer.get());
@@ -42,6 +48,8 @@ export class SimpleShader {
         this.gl.vertexAttribPointer(this.mVertexPositionRef, 3, this.gl.FLOAT, false, 0, 0);
 
         this.gl.enableVertexAttribArray(this.mVertexPositionRef);
+
+        this.gl.uniform4fv(this.mPixelColorRef, pixelColor);
 
     }
 

@@ -16,7 +16,6 @@ export function init(gl: WebGL2RenderingContext, vertexShaderId: string, fragmen
     }
     else {
         throw new Error("shader_support failed to load gl context")
-
     }
 
     mCompiledShader = gl.createProgram() as WebGLProgram;

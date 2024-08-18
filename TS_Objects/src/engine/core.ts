@@ -20,12 +20,6 @@ export function init(htmlCanvasId: string) {
     createShader(mGL)
 }
 
-
-function createShader(gl: WebGL2RenderingContext) {
-    mShader = new SimpleShader(gl, "VertexShader", "FragmentShader");
-
-}
-
 function initWebGL(htmlCanvasId: string) {
     const canvas: HTMLCanvasElement = document.getElementById(htmlCanvasId) as HTMLCanvasElement;
 
@@ -38,6 +32,12 @@ function initWebGL(htmlCanvasId: string) {
 
 }
 
+
+function createShader(gl: WebGL2RenderingContext) {
+    mShader = new SimpleShader(gl, "src/glsl_shaders/simple_vs.glsl", "src/glsl_shaders/simple_fs.glsl");
+
+}
+
 export function clearCanvas(color: number[]) {
 
     if (mGL) {
@@ -46,9 +46,9 @@ export function clearCanvas(color: number[]) {
     }
 }
 
-export function drawSquare() {
+export function drawSquare(color: number[]) {
     if (mShader && mGL) {
-        mShader.activate();
+        mShader.activate(color);
         mGL.drawArrays(mGL.TRIANGLE_STRIP, 0, 4);
     } else if (!mShader) {
         throw new Error("mShader is not being initialized in drawSquare");

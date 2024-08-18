@@ -15,12 +15,17 @@ export class SimpleShader {
             throw new Error("Error linking shader");
         }
         this.mVertexPositionRef = this.gl.getAttribLocation(this.mCompiledShader, "aVertexPosition");
+        this.mPixelColorRef = this.gl.getUniformLocation(this.mCompiledShader, "uPixelColor");
+        if (!this.mPixelColorRef) {
+            throw new Error("mPixelColorRef is not being initialized correctly");
+        }
     }
-    activate() {
+    activate(pixelColor) {
         this.gl.useProgram(this.mCompiledShader);
         this.gl.bindBuffer(this.gl.ARRAY_BUFFER, vertexBuffer.get());
         this.gl.vertexAttribPointer(this.mVertexPositionRef, 3, this.gl.FLOAT, false, 0, 0);
         this.gl.enableVertexAttribArray(this.mVertexPositionRef);
+        this.gl.uniform4fv(this.mPixelColorRef, pixelColor);
     }
 }
 /*function loadAndCompileShader(gl: WebGL2RenderingContext, id: string, shaderType: number) {

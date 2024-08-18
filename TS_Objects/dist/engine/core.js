@@ -13,9 +13,6 @@ export function init(htmlCanvasId) {
     vertexBuffer.init(mGL);
     createShader(mGL);
 }
-function createShader(gl) {
-    mShader = new SimpleShader(gl, "VertexShader", "FragmentShader");
-}
 function initWebGL(htmlCanvasId) {
     const canvas = document.getElementById(htmlCanvasId);
     mGL = (canvas.getContext("webgl2") || canvas.getContext("experimental-webgl2"));
@@ -24,15 +21,18 @@ function initWebGL(htmlCanvasId) {
         return;
     }
 }
+function createShader(gl) {
+    mShader = new SimpleShader(gl, "src/glsl_shaders/simple_vs.glsl", "src/glsl_shaders/simple_fs.glsl");
+}
 export function clearCanvas(color) {
     if (mGL) {
         mGL.clearColor(color[0], color[1], color[2], color[3]);
         mGL.clear(mGL.COLOR_BUFFER_BIT);
     }
 }
-export function drawSquare() {
+export function drawSquare(color) {
     if (mShader && mGL) {
-        mShader.activate();
+        mShader.activate(color);
         mGL.drawArrays(mGL.TRIANGLE_STRIP, 0, 4);
     }
     else if (!mShader) {
