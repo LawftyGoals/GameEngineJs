@@ -1,14 +1,23 @@
-import * as core from "../engine/core/core.js"
+import * as engine from "../engine/index.js";
 
 window.onload = () => {
-    new MyClass("GLCanvas");
-}
+  new MyClass("GLCanvas");
+};
 
 class MyClass {
-    constructor(htmlCanvasId: string) {
-        core.init(htmlCanvasId);
-        core.clearCanvas([1, 0, 1, 1]);
-        core.drawSquare([0, 1, 0, 1]);
+  mWhiteSq;
+  mRedSq;
 
-    }
+  constructor(htmlCanvasId: string) {
+    engine.init(htmlCanvasId);
+
+    this.mWhiteSq = new engine.Renderable();
+    this.mWhiteSq.setColor([1, 1, 1, 1]);
+    this.mRedSq = new engine.Renderable();
+    this.mRedSq.setColor([1, 0, 0, 1]);
+
+    engine.clearCanvas([0, 0.8, 0, 1]);
+    this.mWhiteSq.draw();
+    this.mRedSq.draw();
+  }
 }

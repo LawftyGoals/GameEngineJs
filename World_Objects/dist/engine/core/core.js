@@ -1,5 +1,5 @@
-import { SimpleShader } from "../simple_shader.js";
-import { init as initVertexBuffer } from "../vertex_buffer.js";
+import { SimpleShader } from "./simple_shader.js";
+import { init as initVertexBuffer } from "./vertex_buffer.js";
 let mGL = null;
 let mShader = null;
 export function init(htmlCanvasId) {
@@ -13,7 +13,9 @@ export function init(htmlCanvasId) {
 function initWebGL(htmlCanvasId) {
     var _a;
     const canvas = document.getElementById(htmlCanvasId);
-    mGL = canvas.getContext("webgl2") || canvas.getContext("webgl2-experimental");
+    mGL =
+        canvas.getContext("webgl2") ||
+            canvas.getContext("webgl2-experimental");
     if (!mGL) {
         const innerP = document.createElement("p");
         innerP.textContent = "webgl2 failed to initialize";
