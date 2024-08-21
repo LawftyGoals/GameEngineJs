@@ -14,7 +14,7 @@ export class Renderable {
   }
 
   draw() {
-    let gl = getGL();
+    const gl = getGL();
     this.mShader.activate(this.mColor);
     gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
   }
