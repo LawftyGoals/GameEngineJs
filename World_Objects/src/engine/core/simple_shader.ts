@@ -31,9 +31,9 @@ export class SimpleShader {
     if (!this.mCompiledShader) {
       throw new Error(
         "shader program was not created in simpleShader class: " +
-          vertexShaderId +
-          " " +
-          fragmentShaderId
+        vertexShaderId +
+        " " +
+        fragmentShaderId
       );
     }
 
@@ -52,7 +52,7 @@ export class SimpleShader {
       this.mCompiledShader,
       "aVertexPosition"
     );
-    console.log(this.mVertexPositionRef);
+
     this.mPixelColorRef = this.gl.getUniformLocation(
       this.mCompiledShader,
       "uPixelColor"
@@ -62,7 +62,7 @@ export class SimpleShader {
       throw new Error(
         `mVertexPsitionRef (${!this
           .mVertexPositionRef}) or mPixelcolorRef (${!this
-          .mPixelColorRef}) is failing.`
+            .mPixelColorRef}) is failing.`
       );
     }
   }
@@ -95,8 +95,7 @@ function loadAndCompileShader(
     xmlReq.send();
   } catch (error) {
     throw new Error(
-      `failed to load shader: ${filePath}[HINT: project needs server to run]\n${
-        (error as Error).message
+      `failed to load shader: ${filePath}[HINT: project needs server to run]\n${(error as Error).message
       }`
     );
   }
@@ -121,8 +120,8 @@ function loadAndCompileShader(
   if (!gl.getShaderParameter(compiledShader, gl.COMPILE_STATUS)) {
     throw new Error(
       "A Shader compiling error occured " +
-        gl.getShaderInfoLog(compiledShader) +
-        filePath
+      gl.getShaderInfoLog(compiledShader) +
+      filePath
     );
   }
 

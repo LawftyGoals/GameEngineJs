@@ -18,7 +18,6 @@ export class SimpleShader {
             throw new Error("Error linking shader");
         }
         this.mVertexPositionRef = this.gl.getAttribLocation(this.mCompiledShader, "aVertexPosition");
-        console.log(this.mVertexPositionRef);
         this.mPixelColorRef = this.gl.getUniformLocation(this.mCompiledShader, "uPixelColor");
         if (this.mVertexPositionRef === null || !this.mPixelColorRef) {
             throw new Error(`mVertexPsitionRef (${!this
