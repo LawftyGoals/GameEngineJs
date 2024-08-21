@@ -7,8 +7,6 @@ export { Renderable };
 
 export function init(htmlCanvasId: string) {
   glSys.init(htmlCanvasId);
-  const gl = glSys.getGL();
-
   vertexBuffer.init();
   shaderResources.init();
 }

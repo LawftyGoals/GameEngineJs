@@ -23,7 +23,6 @@ export class SimpleShader {
       this.gl.FRAGMENT_SHADER
     );
 
-    console.log(vertexShaderPath);
 
     this.mCompiledShaders = this.gl.createProgram();
 
@@ -56,12 +55,10 @@ export class SimpleShader {
       "uPixelColor"
     );
 
-    console.log(this.mPixelColorRef);
 
     if (this.mVertexPositionRef === null || !this.mPixelColorRef) {
       throw new Error(
-        `mVertexPsitionRef (${
-          this.mVertexPositionRef === 0 ? false : !this.mVertexPositionRef
+        `mVertexPsitionRef (${this.mVertexPositionRef === 0 ? false : !this.mVertexPositionRef
         }) or mPixelcolorRef (${!this.mPixelColorRef}) is failing.`
       );
     }
@@ -96,15 +93,13 @@ function loadAndCompileShader(
     xmlReq.send();
   } catch (error) {
     throw new Error(
-      `Failed to load shader: ${filePath} [Hint; project needs to run in server]\n${
-        (error as Error).message
+      `Failed to load shader: ${filePath} [Hint; project needs to run in server]\n${(error as Error).message
       }`
     );
   }
 
   const shaderSource = xmlReq.responseText;
 
-  console.log(shaderSource);
 
   if (!shaderSource) {
     throw new Error("Warning: Loading of [" + filePath + "] failed.");
@@ -121,8 +116,8 @@ function loadAndCompileShader(
   if (!gl.getShaderParameter(compiledShader, gl.COMPILE_STATUS)) {
     throw new Error(
       "A Shader compiling error occured " +
-        gl.getShaderInfoLog(compiledShader) +
-        filePath
+      gl.getShaderInfoLog(compiledShader) +
+      filePath
     );
   }
 
