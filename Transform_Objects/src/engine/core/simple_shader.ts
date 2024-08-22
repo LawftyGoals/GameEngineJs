@@ -1,3 +1,4 @@
+import { TVector4 } from "../renderable.js";
 import { getGL } from "./glSys.js";
 import { getVertexBuffer } from "./vertex_buffer.js";
 
@@ -8,6 +9,7 @@ export class SimpleShader {
   mCompiledShaders: WebGLProgram | null;
   mVertexPositionRef: number;
   mPixelColorRef: WebGLUniformLocation | null;
+  mModelMatrixRef: WebGLUniformLocation | null;
 
   constructor(vertexShaderPath: string, fragmentShaderPath: string) {
     this.gl = getGL();
@@ -22,7 +24,6 @@ export class SimpleShader {
       fragmentShaderPath,
       this.gl.FRAGMENT_SHADER
     );
-
 
     this.mCompiledShaders = this.gl.createProgram();
 
@@ -54,30 +55,30 @@ export class SimpleShader {
       this.mCompiledShaders,
       "uPixelColor"
     );
-
+    this.mModelMatrixRef = this.gl.getUniformLocation(
+      this.mCompiledShaders,
+      "uModelXformMatrix"
+    );
 
     if (this.mVertexPositionRef === null || !this.mPixelColorRef) {
       throw new Error(
-        `mVertexPsitionRef (${this.mVertexPositionRef === 0 ? false : !this.mVertexPositionRef
+        `mVertexPsitionRef (${
+          this.mVertexPositionRef === 0 ? false : !this.mVertexPositionRef
         }) or mPixelcolorRef (${!this.mPixelColorRef}) is failing.`
       );
     }
   }
 
-  activate(color: number[]) {
-    this.gl.useProgram(this.mCompiledShaders);
-    this.gl.bindBuffer(this.gl.ARRAY_BUFFER, getVertexBuffer());
-    this.gl.vertexAttribPointer(
-      this.mVertexPositionRef,
-      3,
-      this.gl.FLOAT,
-      false,
-      0,
-      0
-    );
+  activate(color: TVector4, trsMatrix: Iterable<GLfloat>) {
+    const gl = getGL();
+    gl.useProgram(this.mCompiledShaders);
+    gl.bindBuffer(gl.ARRAY_BUFFER, getVertexBuffer());
+    gl.vertexAttribPointer(this.mVertexPositionRef, 3, gl.FLOAT, false, 0, 0);
 
-    this.gl.enableVertexAttribArray(this.mVertexPositionRef);
-    this.gl.uniform4fv(this.mPixelColorRef, color);
+    gl.enableVertexAttribArray(this.mVertexPositionRef);
+
+    gl.uniform4fv(this.mPixelColorRef, color);
+    gl.uniformMatrix4fv(this.mModelMatrixRef, false, trsMatrix);
   }
 }
 
@@ -93,13 +94,13 @@ function loadAndCompileShader(
     xmlReq.send();
   } catch (error) {
     throw new Error(
-      `Failed to load shader: ${filePath} [Hint; project needs to run in server]\n${(error as Error).message
+      `Failed to load shader: ${filePath} [Hint; project needs to run in server]\n${
+        (error as Error).message
       }`
     );
   }
 
   const shaderSource = xmlReq.responseText;
-
 
   if (!shaderSource) {
     throw new Error("Warning: Loading of [" + filePath + "] failed.");
@@ -116,8 +117,8 @@ function loadAndCompileShader(
   if (!gl.getShaderParameter(compiledShader, gl.COMPILE_STATUS)) {
     throw new Error(
       "A Shader compiling error occured " +
-      gl.getShaderInfoLog(compiledShader) +
-      filePath
+        gl.getShaderInfoLog(compiledShader) +
+        filePath
     );
   }
 

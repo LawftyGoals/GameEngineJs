@@ -13,9 +13,9 @@ export class Renderable {
     this.mColor = [1, 1, 1, 1];
   }
 
-  draw() {
+  draw(trsMatrix: Iterable<GLfloat>) {
     const gl = getGL();
-    this.mShader.activate(this.mColor);
+    this.mShader.activate(this.mColor, trsMatrix);
     gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
   }
 

@@ -5,9 +5,9 @@ export class Renderable {
         this.mShader = shaderResources.getConstColorShader();
         this.mColor = [1, 1, 1, 1];
     }
-    draw() {
-        let gl = getGL();
-        this.mShader.activate(this.mColor);
+    draw(trsMatrix) {
+        const gl = getGL();
+        this.mShader.activate(this.mColor, trsMatrix);
         gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
     }
     setColor(color) {

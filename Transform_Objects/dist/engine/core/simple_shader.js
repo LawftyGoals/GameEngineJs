@@ -5,7 +5,6 @@ export class SimpleShader {
         this.gl = getGL();
         this.mVertexShader = loadAndCompileShader(this.gl, vertexShaderPath, this.gl.VERTEX_SHADER);
         this.mFragmentShader = loadAndCompileShader(this.gl, fragmentShaderPath, this.gl.FRAGMENT_SHADER);
-        console.log(vertexShaderPath);
         this.mCompiledShaders = this.gl.createProgram();
         if (!this.mCompiledShaders) {
             throw new Error("A program was not created for mCompiledShaders. ".concat(fragmentShaderPath, vertexShaderPath));
@@ -18,17 +17,19 @@ export class SimpleShader {
         }
         this.mVertexPositionRef = this.gl.getAttribLocation(this.mCompiledShaders, "aVertexPosition");
         this.mPixelColorRef = this.gl.getUniformLocation(this.mCompiledShaders, "uPixelColor");
-        console.log(this.mPixelColorRef);
+        this.mModelMatrixRef = this.gl.getUniformLocation(this.mCompiledShaders, "uModelXformMatrix");
         if (this.mVertexPositionRef === null || !this.mPixelColorRef) {
             throw new Error(`mVertexPsitionRef (${this.mVertexPositionRef === 0 ? false : !this.mVertexPositionRef}) or mPixelcolorRef (${!this.mPixelColorRef}) is failing.`);
         }
     }
-    activate(color) {
-        this.gl.useProgram(this.mCompiledShaders);
-        this.gl.bindBuffer(this.gl.ARRAY_BUFFER, getVertexBuffer());
-        this.gl.vertexAttribPointer(this.mVertexPositionRef, 3, this.gl.FLOAT, false, 0, 0);
-        this.gl.enableVertexAttribArray(this.mVertexPositionRef);
-        this.gl.uniform4fv(this.mPixelColorRef, color);
+    activate(color, trsMatrix) {
+        const gl = getGL();
+        gl.useProgram(this.mCompiledShaders);
+        gl.bindBuffer(gl.ARRAY_BUFFER, getVertexBuffer());
+        gl.vertexAttribPointer(this.mVertexPositionRef, 3, gl.FLOAT, false, 0, 0);
+        gl.enableVertexAttribArray(this.mVertexPositionRef);
+        gl.uniform4fv(this.mPixelColorRef, color);
+        gl.uniformMatrix4fv(this.mModelMatrixRef, false, trsMatrix);
     }
 }
 function loadAndCompileShader(gl, filePath, shaderType) {
@@ -41,7 +42,6 @@ function loadAndCompileShader(gl, filePath, shaderType) {
         throw new Error(`Failed to load shader: ${filePath} [Hint; project needs to run in server]\n${error.message}`);
     }
     const shaderSource = xmlReq.responseText;
-    console.log(shaderSource);
     if (!shaderSource) {
         throw new Error("Warning: Loading of [" + filePath + "] failed.");
     }

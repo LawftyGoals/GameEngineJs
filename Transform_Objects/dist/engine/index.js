@@ -5,7 +5,6 @@ import { Renderable } from "./renderable.js";
 export { Renderable };
 export function init(htmlCanvasId) {
     glSys.init(htmlCanvasId);
-    const gl = glSys.getGL();
     vertexBuffer.init();
     shaderResources.init();
 }
