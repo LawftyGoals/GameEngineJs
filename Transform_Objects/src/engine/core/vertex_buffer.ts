@@ -2,10 +2,6 @@ import { getGL } from "./glSys.js";
 
 let mVertexBuffer: null | WebGLBuffer = null;
 
-const verticesOfSquares = [
-  0.5, 0.5, 0, -0.5, 0.5, 0, 0.5, -0.5, 0, -0.5, -0.5, 0,
-];
-
 export function init() {
   const gl = getGL();
 
@@ -13,7 +9,7 @@ export function init() {
   gl.bindBuffer(gl.ARRAY_BUFFER, mVertexBuffer);
   gl.bufferData(
     gl.ARRAY_BUFFER,
-    new Float32Array(verticesOfSquares),
+    new Float32Array([0.5, 0.5, 0, -0.5, 0.5, 0, 0.5, -0.5, 0, -0.5, -0.5, 0.0]),
     gl.STATIC_DRAW
   );
 }

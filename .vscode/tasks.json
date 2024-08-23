@@ -43,8 +43,18 @@
 			"problemMatcher": [
 				"$tsc-watch"
 			],
-			"group":  "build",
+			"group": "build",
 			"label": "tsc: watch - Transform_Objects/tsconfig.json"
+		},
+		{
+			"type": "typescript",
+			"tsconfig": "Transform_Camera/tsconfig.json",
+			"option": "watch",
+			"problemMatcher": [
+				"$tsc-watch"
+			],
+			"group": "build",
+			"label": "tsc: watch - Transform_Camera/tsconfig.json"
 		}
 	]
 }

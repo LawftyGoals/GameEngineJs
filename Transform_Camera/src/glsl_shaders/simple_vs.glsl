@@ -1,0 +1,6 @@
+attribute vec3 aVertexPosition;
+uniform vec4 uModelXformMatrix;
+
+void main(void) {
+    gl_Position = uModelXformMatrix * vec4(aVertexPosition, 1.0);
+}

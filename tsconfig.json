@@ -105,5 +105,5 @@
     // "skipDefaultLibCheck": true,                      /* Skip type checking .d.ts files that are included with TypeScript. */
     "skipLibCheck": true                                 /* Skip type checking all .d.ts files. */
   },
-  "references": [{"path": "World_Objects"}, {"path": "TS_Objects"}, {"path": "Transform_Objects"}]
+  "references": [{"path": "World_Objects"}, {"path": "TS_Objects"}, {"path": "Transform_Objects"}, {"path": "Transform_Camera"}]
 }

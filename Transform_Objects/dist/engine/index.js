@@ -2,7 +2,8 @@ import * as glSys from "./core/glSys.js";
 import * as vertexBuffer from "./core/vertex_buffer.js";
 import * as shaderResources from "./core/shader_resources.js";
 import { Renderable } from "./renderable.js";
-export { Renderable };
+import { Transform } from "./transform.js";
+export { Renderable, Transform };
 export function init(htmlCanvasId) {
     glSys.init(htmlCanvasId);
     vertexBuffer.init();

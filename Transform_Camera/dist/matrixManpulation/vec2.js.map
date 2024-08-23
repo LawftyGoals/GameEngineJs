@@ -1,0 +1,1 @@
+{"version":3,"file":"vec2.js","sourceRoot":"","sources":["../../src/matrixManpulation/vec2.ts"],"names":[],"mappings":"AAAA,MAAM,UAAU,UAAU,CAAC,CAAS,EAAE,CAAS;IAC7C,MAAM,GAAG,GAAG,IAAI,YAAY,CAAC,CAAC,CAAC,CAAC;IAChC,GAAG,CAAC,CAAC,CAAC,GAAG,CAAC,CAAC;IACX,GAAG,CAAC,CAAC,CAAC,GAAG,CAAC,CAAC;IAEX,OAAO,GAAG,CAAC;AACb,CAAC"}

@@ -1,6 +1,4 @@
 import * as engine from "../engine/index.js";
-import * as mat4 from "../lib/matrixManpulation/mat4.js";
-import * as vec3 from "../lib/matrixManpulation/vec3.js";
 
 window.onload = () => {
   new MyGame("GLCanvas");
@@ -17,19 +15,18 @@ class MyGame {
 
     engine.clearCanvas([0, 0.8, 0, 1]);
 
-    let trsMatrix = mat4.create();
+    whiteSquare.getTransform().setPosition(-0.25, 0.25);
+    whiteSquare.getTransform().setRadRotation(0.2);
+    whiteSquare.getTransform().setSize(1.2, 1.2);
 
-    mat4.translate(trsMatrix, trsMatrix, vec3.fromValues(-0.25, 0.25, 0.0));
-    mat4.rotateZ(trsMatrix, trsMatrix, 0.2);
-    mat4.scale(trsMatrix, trsMatrix, vec3.fromValues(1.2, 1.2, 1.0));
+    whiteSquare.draw();
 
-    whiteSquare.draw(trsMatrix);
+    redSquare.getTransform().setPosX(0.25);
+    redSquare.getTransform().setPosY(-0.25);
+    redSquare.getTransform().setDegRotation(45);
+    redSquare.getTransform().setWidth(0.4);
+    redSquare.getTransform().setHeight(0.4);
 
-    mat4.identity(trsMatrix);
-    mat4.translate(trsMatrix, trsMatrix, vec3.fromValues(0.25, -0.25, 0.0));
-    mat4.rotateZ(trsMatrix, trsMatrix, -0.785);
-    mat4.scale(trsMatrix, trsMatrix, vec3.fromValues(0.4, 0.4, 1.0));
-
-    redSquare.draw(trsMatrix);
+    redSquare.draw();
   }
 }
