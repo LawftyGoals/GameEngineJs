@@ -7,9 +7,9 @@ export class Renderable {
         this.mColor = [1, 1, 1, 1];
         this.mTransform = new Transform();
     }
-    draw() {
+    draw(cameraMatrix) {
         const gl = glSys.get();
-        this.mShader.activate(this.mColor, this.mTransform.getTRSMatrix());
+        this.mShader.activate(this.mColor, this.mTransform.getTRSMatrix(), cameraMatrix);
         gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
     }
     setColor(color) {

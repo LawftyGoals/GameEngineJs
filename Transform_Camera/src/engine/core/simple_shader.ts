@@ -10,6 +10,7 @@ export class SimpleShader {
     mVertexPositionRef: number;
     mPixelColorRef: WebGLUniformLocation | null;
     mModelMatrixRef: WebGLUniformLocation | null;
+    mCameraMatrixRef: WebGLUniformLocation | null;
 
     constructor(vertexShaderPath: string, fragmentShaderPath: string) {
         this.gl = glSys.get();
@@ -31,20 +32,24 @@ export class SimpleShader {
             throw new Error("Error linking shader");
         }
 
-        this.mVertexPositionRef = this.gl.getAttribLocation(this.mCompiledShaders, "aPositionVertex");
+        this.mVertexPositionRef = this.gl.getAttribLocation(this.mCompiledShaders, "aVertexPosition");
         this.mPixelColorRef = this.gl.getUniformLocation(this.mCompiledShaders, "uPixelColor");
         this.mModelMatrixRef = this.gl.getUniformLocation(this.mCompiledShaders, "uModelXformMatrix");
+        this.mCameraMatrixRef = this.gl.getUniformLocation(this.mCompiledShaders, "uCameraXformMatrix");
+
     }
 
-    activate(color: [number, number, number, number], trsMatrix: Iterable<GLfloat>) {
-        this.gl.useProgram(this.mCompiledShaders);
-        this.gl.bindBuffer(this.gl.ARRAY_BUFFER, vertexBuffer.get());
-        this.gl.vertexAttribPointer(this.mVertexPositionRef, 3, this.gl.FLOAT, false, 0, 0);
+    activate(color: [number, number, number, number], trsMatrix: Iterable<GLfloat>, cameraMatrix: Iterable<GLfloat>) {
+        const gl = glSys.get();
+        gl.useProgram(this.mCompiledShaders);
+        gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer.get());
+        gl.vertexAttribPointer(this.mVertexPositionRef, 3, gl.FLOAT, false, 0, 0);
 
-        this.gl.enableVertexAttribArray(this.mVertexPositionRef);
+        gl.enableVertexAttribArray(this.mVertexPositionRef);
 
-        this.gl.uniform4fv(this.mPixelColorRef, color);
-        this.gl.uniformMatrix4fv(this.mModelMatrixRef, false, trsMatrix);
+        gl.uniform4fv(this.mPixelColorRef, color);
+        gl.uniformMatrix4fv(this.mModelMatrixRef, false, trsMatrix);
+        gl.uniformMatrix4fv(this.mCameraMatrixRef, false, cameraMatrix);
 
     }
 }

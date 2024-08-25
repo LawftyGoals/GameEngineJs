@@ -1,6 +1,6 @@
 import * as vec2 from "../lib/matrixManpulation/vec2.js";
-import * as mat4 from "../lib/matrixManpulation/mat4.js";
 import * as vec3 from "../lib/matrixManpulation/vec3.js";
+import * as mat4 from "../lib/matrixManpulation/mat4.js";
 export class Transform {
     constructor() {
         this.mPosition = vec2.fromValues(0, 0);
