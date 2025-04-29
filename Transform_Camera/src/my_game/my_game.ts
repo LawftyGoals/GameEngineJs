@@ -4,7 +4,6 @@ import * as vec2 from "../matrixManpulation/vec2.js";
 import * as vec3 from "../matrixManpulation/vec3.js";
 import * as mat4 from "../matrixManpulation/mat4.js";
 
-
 window.onload = () => {
     new MyGame("GLCanvas");
 };
